@@ -22,12 +22,19 @@ function Tabela() {
         }
     }
 
+    function retirar(item) {
+        alert(`Você retirou o sorvete de ${item.sabor}`)
+        const novosSabores = selection.filter(sabor => sabor.sabor !== item.sabor);
+        setSelection(novosSabores);
+        setTotal(total-item.valor);
+    }
+
     const lista = saborL.map(sabor => (
         <div class="card m-3 d-flex" style={{width:400}} key={sabor.id}>
             <img class="card-img-top" src={sabor.foto} alt="Card image" style={{width:400, height:300}}/>
             <div class="card-body align-content-end">
                 <h2 class="card-title mb-2">{sabor.sabor}</h2>
-                <h3 class="card-title">R$ {sabor.valor}</h3>
+                <h3 class="card-title">R$ {sabor.valor.toFixed(2)}</h3>
                 <button className='btn btn-success' onClick={()=>selections(sabor)}>Comprar</button>
             </div>
         </div>
@@ -64,7 +71,10 @@ function Tabela() {
     const itens = selection.map(item => (
         <tr>
             <td>{item.sabor}</td>
-            <td>{item.valor}</td>
+            <td className='d-flex justify-content-between'>
+                {item.valor.toFixed(2)}
+                <button onClick={()=>retirar(item)} type="button" class="btn btn-danger">X</button>
+            </td>
         </tr>
     ))
         
